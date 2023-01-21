@@ -23,7 +23,7 @@ import pandas as pd
 
 
 class CurrencyInfo:
-    def __init__(self, base_currency: str, currency_qty: float):
+    def __init__(self, base_currency: str, currency_qty: (float, int)):
         self.base_currency = base_currency
         self.currency_qty = currency_qty
 
@@ -71,3 +71,5 @@ class CurrencyInfo:
         )
         df_currency_price = req.json()["rates"][0]["mid"]
         return float(df_currency_price)
+#%%
+curr = CurrencyInfo(base_currency = 'usd', currency_qty = 6.0)
