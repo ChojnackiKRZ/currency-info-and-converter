@@ -36,8 +36,9 @@ class CurrencyInfo:
 
         Returns
         -------
-        df : TYPE
-            DESCRIPTION.
+        df : pd.DataFrame
+            Pandas DataFrame containing info about base currency price (currency
+            of your choice) and result currency price (PLN) after conversion.
 
         """
 
@@ -63,7 +64,7 @@ class CurrencyInfo:
         Returns
         -------
         float
-            DESCRIPTION.
+            Actual price of the currency of interest.
 
         """
 
