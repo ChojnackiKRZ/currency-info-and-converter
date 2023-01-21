@@ -23,7 +23,7 @@ import pandas as pd
 
 
 class CurrencyInfo:
-    def __init__(self, base_currency: str, currency_qty: (float, int)):
+    def __init__(self, base_currency: str, currency_qty: float):
         self.base_currency = base_currency
         self.currency_qty = currency_qty
         self.req = requests.get(
@@ -48,7 +48,7 @@ class CurrencyInfo:
         df["RESULT_AMOUNT"] = pd.DataFrame(df["mid"] * self.currency_qty)
         df["RESULT_CURRENCY"] = pd.DataFrame(["PLN"])
         df.columns = [
-            "MEASURE_DATE",
+            "PRICE_DATE",
             "BASE_AMOUNT",
             "BASE_CURRENCY",
             "RESULT_AMOUNT",
