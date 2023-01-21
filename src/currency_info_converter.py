@@ -26,6 +26,9 @@ class CurrencyInfo:
     def __init__(self, base_currency: str, currency_qty: (float, int)):
         self.base_currency = base_currency
         self.currency_qty = currency_qty
+        self.req = requests.get(
+            f"https://api.nbp.pl/api/exchangerates/rates/a/{self.base_currency}?format=json"
+        )
 
     def calculate_to_pln(self) -> pd.DataFrame:
         """
@@ -37,15 +40,12 @@ class CurrencyInfo:
             DESCRIPTION.
 
         """
-        req = requests.get(
-            f"https://api.nbp.pl/api/exchangerates/rates/a/{self.base_currency}?format=json"
-        )
-        df = pd.DataFrame(req.json()["rates"])
+
+        df = pd.DataFrame(self.req.json()["rates"])
         df = df.drop(columns=["no"], axis=1)
-        df["INPUT_CURRENCY"] = pd.DataFrame([req.json()["code"]])
+        df["INPUT_CURRENCY"] = pd.DataFrame([self.req.json()["code"]])
         df["RESULT_AMOUNT"] = pd.DataFrame(df["mid"] * self.currency_qty)
         df["RESULT_CURRENCY"] = pd.DataFrame(["PLN"])
-        df.columns = df.columns.str.upper()
         df.columns = [
             "MEASURE_DATE",
             "BASE_AMOUNT",
@@ -66,10 +66,6 @@ class CurrencyInfo:
             DESCRIPTION.
 
         """
-        req = requests.get(
-            f"https://api.nbp.pl/api/exchangerates/rates/a/{self.base_currency}?format=json"
-        )
-        df_currency_price = req.json()["rates"][0]["mid"]
+
+        df_currency_price = self.req.json()["rates"][0]["mid"]
         return float(df_currency_price)
-#%%
-curr = CurrencyInfo(base_currency = 'usd', currency_qty = 6.0)
