@@ -28,6 +28,15 @@ class CurrencyInfo:
         self.currency_qty = currency_qty
 
     def calculate_to_pln(self) -> pd.DataFrame:
+        """
+        Function to calculate PLN amount accordingly to your currency of choice.
+
+        Returns
+        -------
+        df : TYPE
+            DESCRIPTION.
+
+        """
         req = requests.get(
             f"https://api.nbp.pl/api/exchangerates/rates/a/{self.base_currency}?format=json"
         )
@@ -47,6 +56,16 @@ class CurrencyInfo:
         return df
 
     def currency_price(self) -> float:
+        """
+        Function to reutrn price of your currency of choice. Price is shown in
+        PLN.
+
+        Returns
+        -------
+        float
+            DESCRIPTION.
+
+        """
         req = requests.get(
             f"https://api.nbp.pl/api/exchangerates/rates/a/{self.base_currency}?format=json"
         )
